@@ -21,10 +21,17 @@ jobs:
           at: /home/circleci/project
       - run: cat output.txt
       - print_pipeline_id
+  make_error:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: echo 'return 1' > fail.sh
+      - run: source fail.sh
+      - run: 
+          command: echo 'report error'
+          when: on_fail
+          
 workflows:
   save_and_print_hello_world:
     jobs:
-      - save_hello_world_output
-      - print_output_file:
-          requires:
-            - save_hello_world_output
+      - make_error
