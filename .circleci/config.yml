@@ -19,7 +19,7 @@ jobs:
 workflows:
   save_and_print_hello_world:
     jobs:
-      - save_and_print_hello_world
+      - save_hello_world_output
       - print_output_file:
           requires:
-            - save_and_print_hello_world
+            - save_hello_world_output
