@@ -9,34 +9,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - run: npm run lint
-  save_hello_world_output:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - run: echo 'hello world' > output.txt
-      - persist_to_workspace:
-          root: /home/circleci/project
-          paths: 
-            - output.txt
-  print_output_file:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - attach_workspace:
-          at: /home/circleci/project
-      - run: cat output.txt
-      - print_pipeline_id
-  make_error:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - run: echo 'return 1' > fail.sh
-      - run: source fail.sh
-      - run: 
-          command: echo 'report error'
-          when: on_fail
-          
+      - run: npm run build
+      - run: npm run lint    
 workflows:
   workflow:
     jobs:
