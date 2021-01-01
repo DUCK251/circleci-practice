@@ -32,7 +32,7 @@ jobs:
       - run: |
           echo 'hello world' > ~/oldname
       - run: yum install -y tar gzip
-      - persis_to_workspace:
+      - persist_to_workspace:
           root: ~/
           paths:
             - oldname
