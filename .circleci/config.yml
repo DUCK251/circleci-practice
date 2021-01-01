@@ -46,7 +46,6 @@ jobs:
           at: ~/
       - run: |
           OldPipelineID="${cat ~/oldname)"
-      - run: |
           echo ${OldPipelineID}
 workflows:
   workflow:
