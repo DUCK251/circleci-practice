@@ -45,7 +45,9 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: |
-          OldPipelineID="${cat ~/oldname)"
+          echo 'export OldPipelineID=$(cat ~/oldname)' >> $BASH_ENV
+          source $BASH_ENV
+      - run: |
           echo ${OldPipelineID}
 workflows:
   workflow:
