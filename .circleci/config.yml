@@ -24,13 +24,34 @@ jobs:
     steps:
       - checkout
       - run: npm audit    
+  save_var:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run: |
+          echo 'hello world' > ~/oldname
+      - run: yum install -y tar gzip
+      - persis_to_workspace:
+          root: ~/
+          paths:
+            - oldname
+  load_var:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run: yum install -y tar gzip
+      - attach_workspace:
+          at: ~/
+      - run: |
+          OldPipelineID="${cat ~/oldname)"
+      - run: |
+          echo ${OldPipelineID}
 workflows:
   workflow:
     jobs:
-      - build
-      - test:
+      - save_var
+      - load_var:
           requires:
-            - build
-      - analyze:
-          requires:
-            - test
+            - save_var
